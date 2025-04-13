@@ -4,8 +4,26 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
 // scene, camera, renderer
 const scene = new THREE.Scene();
-
+const aboutMe = document.querySelector(".about-me");
+const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
 const myCanvas = document.getElementById("my-canvas");
+
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+
+let BP89 = {
+  instance: null,
+  moveDistance: 3,
+};
+
+const clickableObjects = [];
+let intersectObject = "";
+const intersectObjectNames = [
+  "pointer-about-me",
+  "pointer-contact",
+  "pointer-projects",
+  "pointer-skills",
+];
 
 const sizes = {
   width: window.innerWidth,
@@ -81,10 +99,13 @@ loader.load("/models/hassenPortfolio.glb", (glb) => {
   scene.add(models);
 
   models.traverse((model) => {
+    if (intersectObjectNames.includes(model.name)) {
+      clickableObjects.push(model);
+    }
+
     if (model.isMesh) {
       model.receiveShadow = true;
       model.castShadow = true;
-      // console.log(model.material.roughness);
 
       if (model.name === "BP-89") {
         const target = new THREE.Vector3();
@@ -93,22 +114,57 @@ loader.load("/models/hassenPortfolio.glb", (glb) => {
         camera.lookAt(target);
       }
     }
+
+    if (model.name == "BP-89") {
+      BP89.instance = model;
+    }
   });
 });
-
-// onClick
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
 
 function onPointerMove(event) {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 }
 
-window.addEventListener("click", onPointerMove);
+function onMove(event) {
+  console.log(event.key);
+  switch (event.key.toLowerCase()) {
+    case "arrowup":
+    case "w":
+      BP89.instance.position.z -= BP89.moveDistance;
+      break;
 
-// event listner OnResize
+    case "arrowdown":
+    case "s":
+      BP89.instance.position.z += BP89.moveDistance;
+      break;
+
+    case "arrowleft":
+    case "a":
+      BP89.instance.position.x -= BP89.moveDistance;
+      break;
+
+    case "arrowright":
+    case "d":
+      BP89.instance.position.x += BP89.moveDistance;
+      break;
+
+    default:
+      break;
+  }
+}
+
 window.addEventListener("resize", onResize);
+window.addEventListener("pointermove", onPointerMove);
+window.addEventListener("click", () => {
+  if (intersectObject === "pointer-about-me") {
+    aboutMe.classList.toggle("about-me-hidden");
+  }
+});
+aboutMeCloseBtn.addEventListener("click", () => {
+  aboutMe.classList.add("about-me-hidden");
+});
+window.addEventListener("keydown", onMove);
 
 function onResize() {
   sizes.width = window.innerWidth;
@@ -128,12 +184,17 @@ function onResize() {
 // animate
 function animate() {
   raycaster.setFromCamera(pointer, camera);
-  const intersects = raycaster.intersectObjects(scene.children);
+  const intersects = raycaster.intersectObjects(clickableObjects, true);
 
-  for (let i = 0; i < intersects.length; i++) {
-    intersects[i].object.material.color.set(0xff0000);
-    console.log(intersects[i]);
+  if (intersects.length > 0) {
+    document.body.style.cursor = "pointer";
+    intersectObject = intersects[0].object.parent.name;
+  } else {
+    document.body.style.cursor = "default";
+    intersectObject = "";
   }
+
+  // for (let i = 0; i < intersects.length; i++) {}
 
   controls.update();
   renderer.render(scene, camera);
