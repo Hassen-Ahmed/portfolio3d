@@ -1,5 +1,5 @@
 .about-me {
-  position: absolute;
+  position: fixed;
   z-index: 4;
   background-color: rebeccapurple;
   color: white;
@@ -8,6 +8,7 @@
 
   padding: 20px;
   align-items: center;
+  z-index: 20;
 }
 
 .about-me-hidden {
