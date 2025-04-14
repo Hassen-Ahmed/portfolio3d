@@ -245,25 +245,31 @@ function onMove(event) {
 // listners
 const controllers = document.getElementsByClassName("controller");
 
-[...controllers].forEach((controller) =>
-  controller.addEventListener("click", onMove)
-);
+[...controllers].forEach((controller) => {
+  controller.addEventListener("click", onMove);
+});
+
 window.addEventListener("resize", onResize);
 window.addEventListener("pointermove", onPointerMove);
-window.addEventListener("click", () => {
-  if (intersectObject === "pointer-about-me") {
-    aboutMe.classList.toggle("about-me-hidden");
+window.addEventListener(
+  window.innerWidth < 500 ? "touchstart" : "click",
+  () => {
+    console.log(intersectObject);
+
+    if (intersectObject === "pointer-about-me") {
+      aboutMe.classList.remove("about-me-hidden");
+    }
+    if (intersectObject === "pointer-contact") {
+      console.log("pointer-contact");
+    }
+    if (intersectObject === "pointer-projects") {
+      console.log("pointer-projects");
+    }
+    if (intersectObject === "pointer-skills") {
+      console.log("pointer-skills");
+    }
   }
-  if (intersectObject === "pointer-contact") {
-    console.log("pointer-contact");
-  }
-  if (intersectObject === "pointer-projects") {
-    console.log("pointer-projects");
-  }
-  if (intersectObject === "pointer-skills") {
-    console.log("pointer-skills");
-  }
-});
+);
 
 aboutMeCloseBtn.addEventListener("click", () => {
   aboutMe.classList.add("about-me-hidden");

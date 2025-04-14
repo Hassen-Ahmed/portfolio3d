@@ -1,5 +1,5 @@
 .about-me {
-  position: fixed;
+  position: absolute;
   z-index: 4;
   background-color: rebeccapurple;
   color: white;
@@ -8,6 +8,7 @@
 
   padding: 20px;
   align-items: center;
+  overflow-x: hidden;
   z-index: 20;
 }
 
@@ -24,4 +25,5 @@
 
 button {
   padding: 1rem;
+  cursor: pointer;
 }
