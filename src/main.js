@@ -138,13 +138,6 @@ loader.load("/models/hassenPortfolio.glb", (glb) => {
     if (model.isMesh) {
       model.receiveShadow = true;
       model.castShadow = true;
-
-      if (model.name === "BP-89") {
-        // const target = new THREE.Vector3();
-        // model.getWorldPosition(target);
-        // camera.position.set(target.x + 20, target.y + 30, target.z + 40);
-        // camera.lookAt(target);
-      }
     }
 
     if (model.name == "BP-89") {
@@ -254,10 +247,9 @@ window.addEventListener("pointermove", onPointerMove);
 window.addEventListener(
   window.innerWidth < 500 ? "touchstart" : "click",
   () => {
-    console.log(intersectObject);
-
     if (intersectObject === "pointer-about-me") {
       aboutMe.classList.remove("about-me-hidden");
+      BP89.instance.position.x = -3;
     }
     if (intersectObject === "pointer-contact") {
       console.log("pointer-contact");
