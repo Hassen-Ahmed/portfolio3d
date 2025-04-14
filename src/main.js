@@ -1,3 +1,4 @@
+import "./styling/main.scss";
 import * as THREE from "three";
 import { OrbitControls, UltraHDRLoader } from "three/examples/jsm/Addons.js";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
