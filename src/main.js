@@ -185,35 +185,52 @@ function moveBP89(targetPosition, targetRotationY) {
 }
 
 function onMove(event) {
-  if (event.key.toLowerCase() === "=") BP89.jumpSpead = 5;
-  if (event.key.toLowerCase() === "-") BP89.jumpSpead = 2;
+  if (event?.target?.id === "speed-up" && BP89.jumpSpead < 10)
+    BP89.jumpSpead += 1;
+
+  if (event?.target?.id === "speed-down" && BP89.jumpSpead > 2)
+    BP89.jumpSpead -= 1;
+
+  if (event?.target?.id === "zoom-in" && camera.zoom < 2.2) {
+    camera.zoom += 0.1;
+    camera.updateProjectionMatrix();
+  }
+
+  if (event?.target?.id === "zoom-out") {
+    camera.zoom -= 0.1;
+    camera.updateProjectionMatrix();
+  }
 
   if (BP89.isMoving) return;
 
   const targetPosition = new THREE.Vector3().copy(BP89.instance.position);
   let targetRotationY = 0;
 
-  switch (event.key.toLowerCase()) {
+  switch (event?.key?.toLowerCase() || event?.target?.id) {
     case "arrowup":
     case "w":
+    case "up-arrow":
       targetPosition.z -= BP89.moveDistance;
       targetRotationY = 0;
       break;
 
     case "arrowdown":
     case "s":
+    case "down-arrow":
       targetPosition.z += BP89.moveDistance;
       targetRotationY = Math.PI;
       break;
 
     case "arrowleft":
     case "a":
+    case "left-arrow":
       targetPosition.x -= BP89.moveDistance;
       targetRotationY = Math.PI / 2;
       break;
 
     case "arrowright":
     case "d":
+    case "right-arrow":
       targetPosition.x += BP89.moveDistance;
       targetRotationY = -Math.PI / 2;
       break;
@@ -225,6 +242,12 @@ function onMove(event) {
   moveBP89(targetPosition, targetRotationY);
 }
 
+// listners
+const controllers = document.getElementsByClassName("controller");
+
+[...controllers].forEach((controller) =>
+  controller.addEventListener("click", onMove)
+);
 window.addEventListener("resize", onResize);
 window.addEventListener("pointermove", onPointerMove);
 window.addEventListener("click", () => {
