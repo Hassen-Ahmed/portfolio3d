@@ -244,24 +244,21 @@ const controllers = document.getElementsByClassName("controller");
 
 window.addEventListener("resize", onResize);
 window.addEventListener("pointermove", onPointerMove);
-window.addEventListener(
-  window.innerWidth < 500 ? "touchstart" : "click",
-  () => {
-    if (intersectObject === "pointer-about-me") {
-      aboutMe.classList.remove("about-me-hidden");
-      BP89.instance.position.x = -3;
-    }
-    if (intersectObject === "pointer-contact") {
-      console.log("pointer-contact");
-    }
-    if (intersectObject === "pointer-projects") {
-      console.log("pointer-projects");
-    }
-    if (intersectObject === "pointer-skills") {
-      console.log("pointer-skills");
-    }
+window.addEventListener("click", () => {
+  if (intersectObject === "pointer-about-me") {
+    aboutMe.classList.remove("about-me-hidden");
+    BP89.instance.position.x = -3;
   }
-);
+  if (intersectObject === "pointer-contact") {
+    console.log("pointer-contact");
+  }
+  if (intersectObject === "pointer-projects") {
+    console.log("pointer-projects");
+  }
+  if (intersectObject === "pointer-skills") {
+    console.log("pointer-skills");
+  }
+});
 
 aboutMeCloseBtn.addEventListener("click", () => {
   aboutMe.classList.add("about-me-hidden");
