@@ -37,7 +37,8 @@ const sizes = {
 };
 
 const aspectRatio = sizes.width / sizes.height;
-const viewSize = { value: 45 };
+
+const viewSize = { value: window.innerWidth < 500 ? 65 : 45 };
 
 const camera = new THREE.OrthographicCamera(
   (-aspectRatio * viewSize.value) / 2,
