@@ -5,7 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio-3D</title>
-    <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
     <section class="about-me about-me-hidden">
@@ -21,6 +20,68 @@
         sit quibusdam minima?
       </div>
     </section>
+
+    <section class="joystick-wrapper">
+      <div class="joystick-moves">
+        <h2 class="joystick-heading">Move</h2>
+        <div class="joystick-move">
+          <div class="column left">
+            <img
+              src="/public/svgs/arrow-left-circle.svg"
+              id="left-arrow"
+              alt="Arrow left"
+            />
+          </div>
+          <div class="column up-down">
+            <img
+              src="/public/svgs/arrow-up-circle.svg"
+              id="up-arrow"
+              alt="Arrow left"
+            />
+            <img
+              src="/public/svgs/arrow-down-circle.svg"
+              id="down-arrow"
+              alt="Arrow left"
+            />
+          </div>
+          <div class="column right">
+            <img
+              src="/public/svgs/arrow-right-circle.svg"
+              id="right-arrow"
+              alt="Arrow left"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="joystick-speed">
+        <h2 class="joystick-heading">Speed</h2>
+        <img
+          src="/public/svgs/arrow-up-circle.svg"
+          id="speed-up"
+          alt="speed up"
+        />
+        <img
+          src="/public/svgs/arrow-up-circle.svg"
+          id="speed-down"
+          alt="speed down"
+        />
+      </div>
+      <div class="joystick-zoom">
+        <h2 class="joystick-heading">Zoom</h2>
+        <img
+          src="/public/svgs/arrow-up-circle.svg"
+          id="zoom-in"
+          alt="Zoom in"
+        />
+        <img
+          src="/public/svgs/arrow-up-circle.svg"
+          id="zoom-out"
+          alt="Zoom out"
+        />
+      </div>
+    </section>
+
     <div id="my-canvas-wrapper">
       <canvas id="my-canvas"></canvas>
     </div>
