@@ -1,0 +1,21 @@
+@mixin img-transformation($mrg-H: 0, $mrg-V: 0) {
+  img {
+    width: 5rem;
+    height: 5rem;
+    background-color: rgb(119, 245, 97);
+    opacity: 0.3;
+    border-radius: 50%;
+    padding: 0.5rem;
+    transition: scale 0.2s ease-in-out;
+    margin: $mrg-V $mrg-H;
+
+    cursor: pointer;
+
+    &:hover {
+      scale: 1.2;
+    }
+    &:active {
+      scale: 1;
+    }
+  }
+}

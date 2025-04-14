@@ -1,0 +1,63 @@
+@use "./../style-components/mixins" as mixn;
+
+.joystick {
+  &-wrapper {
+    position: fixed;
+    bottom: 0;
+
+    width: 100%;
+    min-height: 10%;
+    max-height: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  &-heading {
+    color: rgb(229, 255, 225);
+    opacity: 0.6;
+  }
+
+  &-moves {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &-move {
+    width: 15rem;
+    height: 15rem;
+    display: flex;
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @include mixn.img-transformation;
+    }
+
+    .up-down {
+      img {
+        margin: 1rem 0;
+      }
+    }
+  }
+  &-speed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include mixn.img-transformation(2rem, 1.2rem);
+  }
+  &-zoom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include mixn.img-transformation(2rem, 1.2rem);
+  }
+}
