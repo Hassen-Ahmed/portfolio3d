@@ -11,7 +11,7 @@ const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
 const myCanvas = document.getElementById("my-canvas");
 
 const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
+const pointer = new THREE.Vector2(1, 1);
 
 let BP89 = {
   instance: null,
@@ -135,21 +135,16 @@ loader.load("/models/hassenPortfolio.glb", (glb) => {
       objectsToRotateInLoop.push(model);
     }
 
+    if (model.name == "BP-89") {
+      BP89.instance = model;
+    }
+
     if (model.isMesh) {
       model.receiveShadow = true;
       model.castShadow = true;
     }
-
-    if (model.name == "BP-89") {
-      BP89.instance = model;
-    }
   });
 });
-
-function onPointerMove(event) {
-  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
-}
 
 function moveBP89(targetPosition, targetRotationY) {
   BP89.isMoving = true;
@@ -235,39 +230,25 @@ function onMove(event) {
   moveBP89(targetPosition, targetRotationY);
 }
 
-// listners
-const controllers = document.getElementsByClassName("controller");
+function onCanvasClick(event) {
+  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+  setTimeout(() => pointer.set(1, 1), 10);
+}
+
+myCanvas.addEventListener("click", onCanvasClick);
+aboutMeCloseBtn.addEventListener("click", () => {
+  aboutMe.classList.add("about-me-hidden");
+});
+
+const controllers = document.getElementsByClassName("controller");
 [...controllers].forEach((controller) => {
   controller.addEventListener("click", onMove);
 });
 
-window.addEventListener("resize", onResize);
-window.addEventListener("pointermove", onPointerMove);
-window.addEventListener(
-  "click",
-  () => {
-    if (intersectObject === "pointer-about-me") {
-      aboutMe.classList.remove("about-me-hidden");
-      BP89.instance.position.x = -3;
-    }
-    if (intersectObject === "pointer-contact") {
-      console.log("pointer-contact");
-    }
-    if (intersectObject === "pointer-projects") {
-      console.log("pointer-projects");
-    }
-    if (intersectObject === "pointer-skills") {
-      console.log("pointer-skills");
-    }
-  },
-  { passive: false }
-);
-
-aboutMeCloseBtn.addEventListener("click", () => {
-  aboutMe.classList.add("about-me-hidden");
-});
 window.addEventListener("keydown", onMove);
+window.addEventListener("resize", onResize);
 
 function onResize() {
   sizes.width = window.innerWidth;
@@ -314,6 +295,20 @@ function animate() {
   if (intersects.length > 0) {
     document.body.style.cursor = "pointer";
     intersectObject = intersects[0].object.parent.name;
+
+    if (intersects[0].object.parent.name === "pointer-about-me") {
+      console.log("about me");
+      aboutMe.classList.remove("about-me-hidden");
+    }
+    if (intersects[0].object.parent.name === "pointer-contact") {
+      console.log("contact");
+    }
+    if (intersects[0].object.parent.name === "pointer-projects") {
+      console.log("projects");
+    }
+    if (intersects[0].object.parent.name === "pointer-skills") {
+      console.log("skills");
+    }
   } else {
     document.body.style.cursor = "default";
     clickableObjects.forEach((item) => {
@@ -321,8 +316,6 @@ function animate() {
     });
     intersectObject = "";
   }
-
-  // for (let i = 0; i < intersects.length; i++) {}
 
   // colusion detection
   if (BP89.instance) {
