@@ -22,6 +22,11 @@ const pointer = new THREE.Vector2(1, 1);
 let movementDirection = null;
 let BP89 = {
   instance: null,
+  initialPosition: {
+    x: 23.6104736328125,
+    y: 0,
+    z: 12.246556282043457,
+  },
   moveDistance: 4,
   moveDuration: 0.5,
   isMoving: false,
@@ -229,6 +234,12 @@ function animate() {
       wallBBsClickables,
       clickableObjects
     );
+  }
+  let zDistance = BP89?.instance?.position.z;
+  let xDistance = BP89?.instance?.position.x;
+
+  if (zDistance > 68 || zDistance < -68 || xDistance > 55 || xDistance < -55) {
+    BP89.instance.position.set(23.6104736328125, 0, 12.246556282043457);
   }
 
   controls.update();
