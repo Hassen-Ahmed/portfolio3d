@@ -7,7 +7,7 @@ import { UltraHDRLoader } from "three/examples/jsm/loaders/UltraHDRLoader.js";
 import { gsap } from "gsap/gsap-core";
 import { modalToggler } from "./helpers/toggler";
 import { transformCamera } from "./helpers/camera";
-import { BP89OnMove } from "./helpers/move";
+import { onBP89OnMove, onCollusion } from "./helpers/move";
 import { rendererSetter } from "./helpers/rendererSetter";
 import { lightSetup } from "./helpers/lightSetup";
 
@@ -179,7 +179,7 @@ function onMove(event) {
   movementDirection =
     event?.key?.toLowerCase() ?? event?.target?.dataset.action;
 
-  BP89OnMove(event, THREE, BP89, camera, moveBP89);
+  onBP89OnMove(event, THREE, BP89, camera, moveBP89);
 }
 
 window.addEventListener("keydown", onMove);
@@ -218,57 +218,17 @@ function animate() {
 
   modalToggler(intersects, clickableObjects, [aboutMe]);
 
-  // colusion detection
   if (BP89.instance) {
-    cubeBB.setFromObject(BP89.instance);
-
-    wallsClickable.forEach((wall, i) => {
-      wallBBsClickables[i].setFromObject(wall);
-      wallBBsClickables[i].expandByScalar(0.3);
-
-      if (cubeBB.intersectsBox(wallBBsClickables[i])) {
-        clickableObjects.forEach((item) => {
-          if (wall.name === item.name) {
-            item.scale.set(2, 2, 2);
-          }
-        });
-      }
-    });
-
-    wallsBoundary.forEach((boundary, i) => {
-      wallBBBoundary[i].setFromObject(boundary);
-      wallBBBoundary[i].expandByScalar(0.3);
-
-      if (cubeBB.intersectsBox(wallBBBoundary[i])) {
-        switch (movementDirection) {
-          case "arrowup":
-          case "w":
-          case "up-arrow":
-            BP89.instance.position.z += 2;
-            break;
-
-          case "arrowdown":
-          case "s":
-          case "down-arrow":
-            BP89.instance.position.z -= 2;
-            break;
-
-          case "arrowleft":
-          case "a":
-          case "left-arrow":
-            BP89.instance.position.x += 2;
-            break;
-
-          case "arrowright":
-          case "d":
-          case "right-arrow":
-            BP89.instance.position.x -= 2;
-            break;
-          default:
-            break;
-        }
-      }
-    });
+    onCollusion(
+      BP89,
+      cubeBB,
+      movementDirection,
+      wallsBoundary,
+      wallBBBoundary,
+      wallsClickable,
+      wallBBsClickables,
+      clickableObjects
+    );
   }
 
   controls.update();
