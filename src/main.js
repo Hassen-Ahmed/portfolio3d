@@ -1,8 +1,15 @@
 import "./styling/main.scss";
 import * as THREE from "three";
-import { OrbitControls, UltraHDRLoader } from "three/examples/jsm/Addons.js";
-import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { UltraHDRLoader } from "three/examples/jsm/loaders/UltraHDRLoader.js";
+
 import { gsap } from "gsap/gsap-core";
+import { modalToggler } from "./helpers/toggler";
+import { transformCamera } from "./helpers/camera";
+import { BP89OnMove } from "./helpers/move";
+import { rendererSetter } from "./helpers/rendererSetter";
+import { lightSetup } from "./helpers/lightSetup";
 
 // scene, camera, renderer
 const scene = new THREE.Scene();
@@ -19,12 +26,12 @@ let BP89 = {
   moveDuration: 0.5,
   isMoving: false,
   jumpHeight: 2,
-  jumpSpead: 5,
+  jumpSpeed: 5,
 };
-const walls = [];
+const wallsClickable = [];
 const objectsToRotateInLoop = [];
 const clickableObjects = [];
-let intersectObject = "";
+
 const intersectObjectNames = [
   "pointer-about-me",
   "pointer-contact",
@@ -53,12 +60,7 @@ camera.updateProjectionMatrix();
 const cameraOffset = new THREE.Vector3(40, 40, 40);
 
 const renderer = new THREE.WebGLRenderer({ canvas: myCanvas, antialias: true });
-renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.3;
+rendererSetter(THREE, renderer, sizes);
 
 // orbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -71,33 +73,17 @@ controls.enablePan = true;
 const hdrLoader = new UltraHDRLoader();
 hdrLoader.load("/images/san_giuseppe_bridge_2k.jpg", (hdr) => {
   hdr.mapping = THREE.EquirectangularReflectionMapping;
-
   scene.background = hdr;
   scene.environment = hdr;
   scene.environmentIntensity = 0.2;
 });
 
-hdrLoader.castShadow = true;
-
 // light
 const light = new THREE.DirectionalLight(0xffffff, 5);
-light.position.set(50, 100, 20);
-
-light.target.position.set(0, 0, 0);
-light.castShadow = true;
-light.shadow.bias = -0.001;
-
-light.shadow.camera.left = -80;
-light.shadow.camera.right = 80;
-light.shadow.camera.top = 60;
-light.shadow.camera.bottom = -60;
-light.shadow.mapSize.width = 2048;
-light.shadow.mapSize.height = 2048;
-scene.add(light);
-scene.add(light.target);
+lightSetup(scene, light);
 
 const cubeBB = new THREE.Box3();
-const wallBBs = [
+const wallBBsClickables = [
   new THREE.Box3(),
   new THREE.Box3(),
   new THREE.Box3(),
@@ -115,20 +101,18 @@ loader.load("/models/hassenPortfolio.glb", (glb) => {
       model.scale.set(0, 0, 0);
       clickableObjects.push(model);
 
-      // walls
-      const geometryWal = new THREE.BoxGeometry(2, 2, 2);
+      const geometryWall = new THREE.BoxGeometry(2, 2, 2);
       const material = new THREE.MeshBasicMaterial({
         opacity: 0,
         visible: false,
       });
-
-      const wall = new THREE.Mesh(geometryWal, material);
+      const wall = new THREE.Mesh(geometryWall, material);
       wall.name = model.name;
       wall.position.x = model.position.x;
       wall.position.y = 1;
       wall.position.z = model.position.z;
       scene.add(wall);
-      walls.push(wall);
+      wallsClickable.push(wall);
     }
 
     if (model.name.includes("wind-turbine-wing")) {
@@ -169,65 +153,7 @@ function moveBP89(targetPosition, targetRotationY) {
     0
   );
   tl.to(BP89.instance.rotation, { y: targetRotationY }, 0);
-  tl.timeScale(BP89.jumpSpead);
-}
-
-function onMove(event) {
-  if (event?.target?.id === "speed-up" && BP89.jumpSpead < 10)
-    BP89.jumpSpead += 1;
-
-  if (event?.target?.id === "speed-down" && BP89.jumpSpead > 2)
-    BP89.jumpSpead -= 1;
-
-  if (event?.target?.id === "zoom-in" && camera.zoom < 2.2) {
-    camera.zoom += 0.1;
-    camera.updateProjectionMatrix();
-  }
-
-  if (event?.target?.id === "zoom-out") {
-    camera.zoom -= 0.1;
-    camera.updateProjectionMatrix();
-  }
-
-  if (BP89.isMoving) return;
-
-  const targetPosition = new THREE.Vector3().copy(BP89.instance.position);
-  let targetRotationY = 0;
-
-  switch (event?.key?.toLowerCase() || event?.target?.id) {
-    case "arrowup":
-    case "w":
-    case "up-arrow":
-      targetPosition.z -= BP89.moveDistance;
-      targetRotationY = 0;
-      break;
-
-    case "arrowdown":
-    case "s":
-    case "down-arrow":
-      targetPosition.z += BP89.moveDistance;
-      targetRotationY = Math.PI;
-      break;
-
-    case "arrowleft":
-    case "a":
-    case "left-arrow":
-      targetPosition.x -= BP89.moveDistance;
-      targetRotationY = Math.PI / 2;
-      break;
-
-    case "arrowright":
-    case "d":
-    case "right-arrow":
-      targetPosition.x += BP89.moveDistance;
-      targetRotationY = -Math.PI / 2;
-      break;
-
-    default:
-      break;
-  }
-
-  moveBP89(targetPosition, targetRotationY);
+  tl.timeScale(BP89.jumpSpeed);
 }
 
 function onCanvasClick(event) {
@@ -247,22 +173,15 @@ const controllers = document.getElementsByClassName("controller");
   controller.addEventListener("click", onMove);
 });
 
+function onMove(event) {
+  BP89OnMove(event, THREE, BP89, camera, moveBP89);
+}
+
 window.addEventListener("keydown", onMove);
 window.addEventListener("resize", onResize);
 
 function onResize() {
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
-
-  const aspectROnRsize = window.innerWidth / window.innerHeight;
-
-  camera.left = (-aspectROnRsize * viewSize.value) / 2;
-  camera.right = (aspectROnRsize * viewSize.value) / 2;
-  camera.top = viewSize.value / 2;
-  camera.bottom = -viewSize.value / 2;
-
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  transformCamera(camera, sizes, viewSize, renderer);
 }
 
 // animate
@@ -292,40 +211,17 @@ function animate() {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(clickableObjects, true);
 
-  if (intersects.length > 0) {
-    document.body.style.cursor = "pointer";
-    intersectObject = intersects[0].object.parent.name;
-
-    if (intersects[0].object.parent.name === "pointer-about-me") {
-      console.log("about me");
-      aboutMe.classList.remove("about-me-hidden");
-    }
-    if (intersects[0].object.parent.name === "pointer-contact") {
-      console.log("contact");
-    }
-    if (intersects[0].object.parent.name === "pointer-projects") {
-      console.log("projects");
-    }
-    if (intersects[0].object.parent.name === "pointer-skills") {
-      console.log("skills");
-    }
-  } else {
-    document.body.style.cursor = "default";
-    clickableObjects.forEach((item) => {
-      item.scale.set(0, 0, 0);
-    });
-    intersectObject = "";
-  }
+  modalToggler(intersects, clickableObjects, [aboutMe]);
 
   // colusion detection
   if (BP89.instance) {
     cubeBB.setFromObject(BP89.instance);
 
-    walls.forEach((wall, i) => {
-      wallBBs[i].setFromObject(wall);
-      wallBBs[i].expandByScalar(0.3);
+    wallsClickable.forEach((wall, i) => {
+      wallBBsClickables[i].setFromObject(wall);
+      wallBBsClickables[i].expandByScalar(0.3);
 
-      if (cubeBB.intersectsBox(wallBBs[i])) {
+      if (cubeBB.intersectsBox(wallBBsClickables[i])) {
         clickableObjects.forEach((item) => {
           if (wall.name === item.name) {
             item.scale.set(2, 2, 2);
