@@ -22,11 +22,6 @@ const pointer = new THREE.Vector2(1, 1);
 let movementDirection = null;
 let BP89 = {
   instance: null,
-  initialPosition: {
-    x: 23.6104736328125,
-    y: 0,
-    z: 12.246556282043457,
-  },
   moveDistance: 4,
   moveDuration: 0.5,
   isMoving: false,
@@ -89,7 +84,7 @@ lightSetup(scene, light);
 const wallsClickable = [];
 const wallsBoundary = [];
 const cubeBB = new THREE.Box3();
-const wallBBBoundary = Array(8).fill(new THREE.Box3());
+const wallBBBoundary = Array(12).fill(new THREE.Box3());
 const wallBBsClickables = Array(4).fill(new THREE.Box3());
 
 // glb loader
