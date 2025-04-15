@@ -19,7 +19,7 @@ const myCanvas = document.getElementById("my-canvas");
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2(1, 1);
-
+let movementDirection = null;
 let BP89 = {
   instance: null,
   moveDistance: 4,
@@ -28,10 +28,9 @@ let BP89 = {
   jumpHeight: 2,
   jumpSpeed: 5,
 };
-const wallsClickable = [];
+
 const objectsToRotateInLoop = [];
 const clickableObjects = [];
-
 const intersectObjectNames = [
   "pointer-about-me",
   "pointer-contact",
@@ -82,13 +81,11 @@ hdrLoader.load("/images/san_giuseppe_bridge_2k.jpg", (hdr) => {
 const light = new THREE.DirectionalLight(0xffffff, 5);
 lightSetup(scene, light);
 
+const wallsClickable = [];
+const wallsBoundary = [];
 const cubeBB = new THREE.Box3();
-const wallBBsClickables = [
-  new THREE.Box3(),
-  new THREE.Box3(),
-  new THREE.Box3(),
-  new THREE.Box3(),
-];
+const wallBBBoundary = Array(8).fill(new THREE.Box3());
+const wallBBsClickables = Array(4).fill(new THREE.Box3());
 
 // glb loader
 const loader = new GLTFLoader();
@@ -97,6 +94,11 @@ loader.load("/models/hassenPortfolio.glb", (glb) => {
   scene.add(models);
 
   models.traverse((model) => {
+    if (model.name.includes("wall-boundary")) {
+      model.visible = false;
+      wallsBoundary.push(model);
+    }
+
     if (intersectObjectNames.includes(model.name)) {
       model.scale.set(0, 0, 0);
       clickableObjects.push(model);
@@ -160,7 +162,7 @@ function onCanvasClick(event) {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
   pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-  setTimeout(() => pointer.set(1, 1), 10);
+  setTimeout(() => pointer.set(1, 1), 20);
 }
 
 myCanvas.addEventListener("click", onCanvasClick);
@@ -174,6 +176,9 @@ const controllers = document.getElementsByClassName("controller");
 });
 
 function onMove(event) {
+  movementDirection =
+    event?.key?.toLowerCase() ?? event?.target?.dataset.action;
+
   BP89OnMove(event, THREE, BP89, camera, moveBP89);
 }
 
@@ -227,6 +232,41 @@ function animate() {
             item.scale.set(2, 2, 2);
           }
         });
+      }
+    });
+
+    wallsBoundary.forEach((boundary, i) => {
+      wallBBBoundary[i].setFromObject(boundary);
+      wallBBBoundary[i].expandByScalar(0.3);
+
+      if (cubeBB.intersectsBox(wallBBBoundary[i])) {
+        switch (movementDirection) {
+          case "arrowup":
+          case "w":
+          case "up-arrow":
+            BP89.instance.position.z += 2;
+            break;
+
+          case "arrowdown":
+          case "s":
+          case "down-arrow":
+            BP89.instance.position.z -= 2;
+            break;
+
+          case "arrowleft":
+          case "a":
+          case "left-arrow":
+            BP89.instance.position.x += 2;
+            break;
+
+          case "arrowright":
+          case "d":
+          case "right-arrow":
+            BP89.instance.position.x -= 2;
+            break;
+          default:
+            break;
+        }
       }
     });
   }
