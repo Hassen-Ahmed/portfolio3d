@@ -1,4 +1,36 @@
-export const onBP89OnMove = (event, THREE, BP89, camera, moveBP89) => {
+import * as THREE from "three";
+import { gsap } from "gsap/gsap-core";
+import { BP89, movementDirection, viewSize } from "./dynamic-values";
+import { cubeBB, wallBBBoundary, wallBBsClickables } from "./constant-values";
+import camera from "../majors/camera";
+
+export const moveBP89 = (targetPosition, targetRotationY) => {
+  BP89.isMoving = true;
+  viewSize.value = 45;
+
+  const tl = gsap.timeline({
+    defaults: {
+      duration: BP89.moveDuration,
+      ease: "power1.inOut",
+    },
+    onComplete: () => (BP89.isMoving = false),
+  });
+
+  tl.to(BP89.instance.position, {
+    x: targetPosition.x,
+    z: targetPosition.z,
+  });
+
+  tl.to(
+    BP89.instance.position,
+    { y: BP89.instance.position.y + BP89.jumpHeight, yoyo: true, repeat: 1 },
+    0
+  );
+  tl.to(BP89.instance.rotation, { y: targetRotationY }, 0);
+  tl.timeScale(BP89.jumpSpeed);
+};
+
+export const onBP89OnMove = (event, camera) => {
   const action = event?.target?.dataset.action;
 
   if (action === "speed-up" && BP89.jumpSpeed < 10) BP89.jumpSpeed += 1;
@@ -56,14 +88,16 @@ export const onBP89OnMove = (event, THREE, BP89, camera, moveBP89) => {
   moveBP89(targetPosition, targetRotationY);
 };
 
+export const onMove = (event) => {
+  movementDirection.value =
+    event?.key?.toLowerCase() ?? event?.target?.dataset.action;
+
+  onBP89OnMove(event, camera);
+};
+
 export const onCollusion = (
-  BP89,
-  cubeBB,
-  movementDirection,
   wallsBoundary,
-  wallBBBoundary,
   wallsClickable,
-  wallBBsClickables,
   clickableObjects
 ) => {
   cubeBB.setFromObject(BP89.instance);
@@ -86,7 +120,7 @@ export const onCollusion = (
     wallBBBoundary[i].expandByScalar(0.3);
 
     if (cubeBB.intersectsBox(wallBBBoundary[i])) {
-      switch (movementDirection) {
+      switch (movementDirection.value) {
         case "arrowup":
         case "w":
         case "up-arrow":
