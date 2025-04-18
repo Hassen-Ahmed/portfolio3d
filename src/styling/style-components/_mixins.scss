@@ -19,3 +19,11 @@
     }
   }
 }
+
+@mixin flexy($dicn: row, $jc: center, $ait: center, $gap: 0) {
+  display: flex;
+  flex-direction: $dicn;
+  justify-content: $jc;
+  align-items: $ait;
+  gap: $gap;
+}
