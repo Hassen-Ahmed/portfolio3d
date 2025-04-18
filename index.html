@@ -90,7 +90,7 @@
     </div>
 
     <script type="module">
-      import "./src/styling/main.scss";
+      import "/src/styling/main.scss";
       async function loadComponent(path, targetId) {
         const res = await fetch(path);
         const html = await res.text();
@@ -102,12 +102,18 @@
         const clone = template.content.cloneNode(true);
 
         document.getElementById(targetId).appendChild(clone);
-        console.log("working...");
       }
 
-      loadComponent("/public/about.html", "about-me--container");
-    </script>
+      async function init() {
+        await loadComponent(
+          "/src/components/about.html",
+          "about-me--container"
+        );
 
-    <script type="module" src="/src/main.js"></script>
+        import("/src/main.js");
+      }
+
+      init();
+    </script>
   </body>
 </html>
