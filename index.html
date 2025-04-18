@@ -94,16 +94,14 @@
       async function loadComponent(path, targetId) {
         const res = await fetch(path);
         const html = await res.text();
-
+        console.log(html);
         const temp = document.createElement("div");
         temp.innerHTML = html;
 
-        const template = temp.querySelector("template");
-        const clone = template.content.cloneNode(true);
+        // const template = temp.querySelector("template");
+        // const clone = template.content.cloneNode(true);
 
-        document.getElementById(targetId).appendChild(clone);
-        console.log(html);
-        console.log(template);
+        // document.getElementById(targetId).appendChild(clone);
       }
 
       async function init() {
