@@ -1,31 +1,111 @@
-.about-me {
+@use "../style-components/mixins" as mixn;
+@use "../style-components/variables" as vars;
+@use "../style-components/animations" as *;
+
+#about-me--container {
   position: absolute;
-  z-index: 4;
-  background-color: rebeccapurple;
-  color: white;
   width: 100%;
   height: 100%;
-
-  padding: 20px;
-  align-items: center;
-  overflow-x: hidden;
   z-index: 20;
-
-  font-size: 2rem;
 }
 
-.about-me-hidden {
-  display: none;
-}
-
-.heading {
-  display: flex;
+.about-me {
   width: 100%;
-  justify-content: space-between;
-  margin: 1rem 0;
-}
+  height: 100%;
+  padding: 2rem 20rem 10rem 20rem;
+  overflow-x: hidden;
+  background-color: rgb(255, 132, 56);
+  @include mixn.flexy(column, start);
 
-button {
-  padding: 1rem;
-  cursor: pointer;
+  @media screen and (max-width: 1000px) {
+    padding: 2rem 2rem;
+  }
+
+  &__heading {
+    @include mixn.flexy(row, space-between);
+    font-size: 2.2rem;
+    width: 100%;
+    margin: 1rem 0;
+
+    h2 {
+      color: rgb(255, 255, 255);
+    }
+
+    button {
+      padding: 1rem;
+      font-size: 2.2rem;
+      cursor: pointer;
+      background-color: rgb(255, 255, 255);
+      border: none;
+      box-shadow: -0.3rem 0.3rem 0.2rem rgba(0, 0, 0, 0.25);
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: translateY(-0.4rem);
+      }
+
+      &:active {
+        transform: translateY(0.4rem);
+      }
+    }
+  }
+
+  &__contents {
+    @include mixn.flexy(column);
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    margin-top: 15rem;
+    padding-top: 20rem;
+
+    @media screen and (max-width: 1000px) {
+      margin-top: 8rem;
+      padding-top: 10rem;
+    }
+
+    .BP89--logo {
+      position: absolute;
+      top: -20rem;
+
+      width: vars.$BP89-length;
+      height: vars.$BP89-length;
+      animation-name: loop-up-down;
+      animation-duration: 2s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+
+      @media screen and (max-width: 1000px) {
+        top: -10rem;
+        width: 20rem;
+        height: 20rem;
+      }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .para {
+      @include mixn.flexy(column, start, start, 2rem);
+      font-size: 2.2rem;
+      font-weight: 600;
+      padding: 5rem;
+      line-height: 4rem;
+
+      @media screen and (max-width: 1000px) {
+        font-size: 1.6rem;
+        line-height: 2rem;
+        padding: 1rem;
+      }
+    }
+  }
+
+  &--snippet {
+    color: rgb(90, 139, 238);
+    &-hassen {
+      color: rgb(248, 166, 43);
+    }
+  }
 }
