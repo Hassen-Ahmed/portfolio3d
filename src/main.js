@@ -7,7 +7,6 @@ import { onMove } from "./helpers/move";
 import renderer from "./majors/renderer";
 import {
   aboutMe,
-  aboutMeCloseBtn,
   controllers,
   myCanvas,
   pointer,
@@ -36,6 +35,7 @@ loader.load("/models/hassenPortfolio.glb", (glb) => glbLoader(glb));
 });
 window.addEventListener("keydown", onMove);
 window.addEventListener("resize", transformCamera);
+const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
 aboutMeCloseBtn.addEventListener(
   "click",
   () => (aboutMe.style.display = "none")
