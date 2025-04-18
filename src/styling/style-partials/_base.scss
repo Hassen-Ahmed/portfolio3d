@@ -46,7 +46,7 @@ body::before {
 
 body::after {
   content: "";
-  background-image: url("/public/noise.png");
+  background-image: url("/public/images/noise.png");
   background-size: cover;
   background-repeat: repeat;
   mix-blend-mode: soft-light;
