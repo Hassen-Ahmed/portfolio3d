@@ -1,0 +1,11 @@
+@keyframes loop-up-down {
+  0% {
+    transform: translateY(-2rem);
+  }
+  50% {
+    transform: translateY(0rem);
+  }
+  100% {
+    transform: translateY(-2rem);
+  }
+}
