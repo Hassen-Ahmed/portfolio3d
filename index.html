@@ -91,7 +91,19 @@
 
     <script type="module">
       import "./src/styling/main.scss";
-      import { loadComponent } from "./src/helpers/loader-component.js";
+      async function loadComponent(path, targetId) {
+        const res = await fetch(path);
+        const html = await res.text();
+
+        const temp = document.createElement("div");
+        temp.innerHTML = html;
+
+        const template = temp.querySelector("template");
+        const clone = template.content.cloneNode(true);
+
+        document.getElementById(targetId).appendChild(clone);
+      }
+
       loadComponent("/public/components/about.html", "about-me--container");
     </script>
 
