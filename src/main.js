@@ -1,4 +1,3 @@
-import "./styling/main.scss";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { UltraHDRLoader } from "three/examples/jsm/loaders/UltraHDRLoader.js";
@@ -37,8 +36,9 @@ loader.load("/models/hassenPortfolio.glb", (glb) => glbLoader(glb));
 });
 window.addEventListener("keydown", onMove);
 window.addEventListener("resize", transformCamera);
-aboutMeCloseBtn.addEventListener("click", () =>
-  aboutMe.classList.add("about-me-hidden")
+aboutMeCloseBtn.addEventListener(
+  "click",
+  () => (aboutMe.style.display = "none")
 );
 myCanvas.addEventListener("click", onCanvasClick);
 
