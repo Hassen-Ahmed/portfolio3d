@@ -5,9 +5,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   font-size: 62.5%;
 }
+
 html,
 body {
   width: 100%;
@@ -15,6 +17,10 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+
+  font-family: "Oxanium", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 body {
