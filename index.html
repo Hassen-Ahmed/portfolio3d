@@ -12,9 +12,9 @@
   <body>
     <section id="about-me--container" style="display: none"></section>
     <!-- style="display: none" -->
-    <section id="skills-container"></section>
+    <!-- <section id="skills-container"></section>
     <section id="projects-container"></section>
-    <section id="contact-container"></section>
+    <section id="contact-container"></section> -->
 
     <section class="joystick-wrapper">
       <div class="joystick-moves">
@@ -91,8 +91,8 @@
 
     <script type="module">
       import "./src/styling/main.scss";
-      import { loadComponent } from "./src/helpers/loader-component";
-      loadComponent("/components/about.html", "about-me--container");
+      import { loadComponent } from "./src/helpers/loader-component.js";
+      loadComponent("/public/components/about.html", "about-me--container");
     </script>
 
     <script type="module" src="/src/main.js"></script>
