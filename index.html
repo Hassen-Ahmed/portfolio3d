@@ -105,10 +105,7 @@
       }
 
       async function init() {
-        await loadComponent(
-          "/src/components/about.html",
-          "about-me--container"
-        );
+        await loadComponent("/components/about.html", "about-me--container");
 
         import("/src/main.js");
       }
