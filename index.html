@@ -102,11 +102,13 @@
         const clone = template.content.cloneNode(true);
 
         document.getElementById(targetId).appendChild(clone);
+        console.log(html);
+        console.log(template);
       }
 
       async function init() {
         await loadComponent(
-          "/public/components/about.html",
+          "/src/components/about.html",
           "about-me--container"
         );
 
