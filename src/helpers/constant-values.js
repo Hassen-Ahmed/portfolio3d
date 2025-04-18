@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 export const myCanvas = document.getElementById("my-canvas");
-export const aboutMe = document.querySelector(".about-me");
+export const aboutMe = document.querySelector("#about-me--container");
 export const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
 export const controllers = document.getElementsByClassName("controller");
 
