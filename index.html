@@ -102,9 +102,10 @@
         const clone = template.content.cloneNode(true);
 
         document.getElementById(targetId).appendChild(clone);
+        console.log("working...");
       }
 
-      loadComponent("./src/components/about.html", "about-me--container");
+      loadComponent("/public/about.html", "about-me--container");
     </script>
 
     <script type="module" src="/src/main.js"></script>
