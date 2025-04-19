@@ -19,5 +19,5 @@ export let BP89 = {
   moveDuration: 0.5,
   isMoving: false,
   jumpHeight: 2,
-  jumpSpeed: 5,
+  jumpSpeed: 6,
 };
