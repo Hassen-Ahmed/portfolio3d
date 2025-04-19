@@ -37,25 +37,30 @@
   }
 
   .enter-btn {
+    animation-name: enter-btn--intro;
+    animation-duration: 0.5s;
+    animation-delay: 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    opacity: 0;
+
+    outline: auto;
+    outline-color: white;
+    outline-style: dashed;
+
+    transition: all 0.2s ease-in;
+
+    &:hover {
+      scale: (1.2);
+      translate: 0 -1rem;
+    }
+
     button {
       padding: 1.5rem 2rem;
-      border: none;
       font-size: 2rem;
+      border: none;
+
       cursor: pointer;
-      transition: all 0.2s ease-in;
-
-      &:hover {
-        outline-color: white;
-        outline-width: 0.1rem;
-        outline-offset: 1rem;
-        outline-style: dashed;
-
-        transform: translateY(-0.4rem);
-      }
-
-      &:active {
-        transform: translateY(0.4rem);
-      }
     }
   }
 }

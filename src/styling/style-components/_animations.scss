@@ -27,3 +27,19 @@
     background-color: greenyellow;
   }
 }
+
+@keyframes enter-btn--intro {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+    outline-width: 0rem;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+
+    outline-width: 0.1rem;
+    outline-offset: 1rem;
+  }
+}
