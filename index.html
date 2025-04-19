@@ -10,6 +10,7 @@
     <title>Portfolio-3D</title>
   </head>
   <body>
+    <section id="landing-page--container"></section>
     <section id="about-me--container" style="display: none"></section>
     <!-- style="display: none" -->
     <!-- <section id="skills-container"></section>
@@ -91,20 +92,13 @@
 
     <script type="module">
       import "/src/styling/main.scss";
-      async function loadComponent(path, targetId) {
-        const res = await fetch(path);
-        const html = await res.text();
-
-        const temp = document.createElement("div");
-        temp.innerHTML = html;
-
-        const template = temp.querySelector("template");
-        const clone = template.content.cloneNode(true);
-
-        document.getElementById(targetId).appendChild(clone);
-      }
+      import { loadComponent } from "/src/helpers/loader-component.js";
 
       async function init() {
+        await loadComponent(
+          "/components/landing-page.html",
+          "landing-page--container"
+        );
         await loadComponent("/components/about.html", "about-me--container");
 
         import("/src/main.js");
