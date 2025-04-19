@@ -8,7 +8,10 @@ import renderer from "./majors/renderer";
 import {
   aboutMe,
   aboutMeCloseBtn,
+  circles,
   controllers,
+  enterBtn,
+  landingPageContainer,
   myCanvas,
   pointer,
 } from "./helpers/constant-values";
@@ -17,7 +20,18 @@ import light from "./majors/light";
 import animate from "./majors/animate";
 import { glbLoader } from "./helpers/loaders/glb";
 
-// hdr
+//
+setTimeout(() => {
+  circles.style.display = "none";
+  enterBtn.style.display = "block";
+}, 2000);
+
+enterBtn.addEventListener("click", () => {
+  console.log("enter btn");
+  landingPageContainer.style.display = "none";
+});
+
+// hdr loader
 const hdrLoader = new UltraHDRLoader();
 hdrLoader.load("/images/san_giuseppe_bridge_2k.jpg", (hdr) => {
   hdr.mapping = THREE.EquirectangularReflectionMapping;
