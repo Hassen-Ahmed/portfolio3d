@@ -1,6 +1,12 @@
 import * as THREE from "three";
+export const circles = document.querySelector(".circles");
+export const enterBtn = document.querySelector(".enter-btn");
+export const landingPageContainer = document.getElementById(
+  "landing-page--container"
+);
 
 export const myCanvas = document.getElementById("my-canvas");
+
 export const aboutMe = document.querySelector("#about-me--container");
 export const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
 export const controllers = document.getElementsByClassName("controller");
