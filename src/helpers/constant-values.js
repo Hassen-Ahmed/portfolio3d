@@ -13,6 +13,8 @@ export const skillsElem = document.getElementById("skills--container");
 export const skillsCloseBtn = document.querySelector(".skills--close-btn");
 export const contactsElem = document.getElementById("contacts--container");
 export const contactsCloseBtn = document.querySelector(".contacts--close-btn");
+export const projectsElem = document.getElementById("projects--container");
+export const projectsCloseBtn = document.querySelector(".projects--close-btn");
 
 export const controllers = document.getElementsByClassName("controller");
 
