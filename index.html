@@ -10,6 +10,13 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap");
     </style>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio-3D</title>
   </head>
@@ -17,7 +24,8 @@
     <section id="landing-page--container"></section>
     <section id="about-me--container" style="display: none"></section>
     <!-- style="display: none" -->
-    <!-- <section id="skills-container"></section>
+    <section id="skills--container" style="display: none"></section>
+    <!-- 
     <section id="projects-container"></section>
     <section id="contact-container"></section> -->
 
@@ -104,6 +112,7 @@
           "landing-page--container"
         );
         await loadComponent("/components/about.html", "about-me--container");
+        await loadComponent("/components/skills.html", "skills--container");
 
         import("/src/main.js");
       }

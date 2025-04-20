@@ -1,0 +1,59 @@
+@use "../style-components/mixins" as mixn;
+
+#skills--container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+.skills {
+  width: 100%;
+  height: 100%;
+  padding: 2rem 20rem 10rem 20rem;
+  overflow-x: hidden;
+  background-color: rgb(255, 132, 56);
+  @include mixn.flexy(column, start);
+
+  @media screen and (max-width: 1000px) {
+    padding: 2rem 2rem;
+  }
+
+  &__heading {
+    @include mixn.headings;
+  }
+
+  &--contents {
+    width: 100%;
+    height: 100%;
+    padding: 10rem 0;
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    @media screen and (max-width: 650px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    & > *:nth-child(even) {
+      background-color: rgba(69, 69, 69, 0.8);
+    }
+    & > *:nth-child(odd) {
+      background-color: rgba(230, 230, 230, 0.8);
+    }
+  }
+
+  &__content {
+    @include mixn.flexy(column);
+    padding: 2rem;
+    font-size: 2rem;
+    height: 100%;
+    color: rgb(255, 132, 56);
+  }
+}
