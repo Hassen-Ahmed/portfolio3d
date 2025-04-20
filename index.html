@@ -21,13 +21,11 @@
     <title>Portfolio-3D</title>
   </head>
   <body>
-    <section id="landing-page--container"></section>
+    <section id="landing-page--container" style="display: block"></section>
     <section id="about-me--container" style="display: none"></section>
     <section id="skills--container" style="display: none"></section>
     <section id="contacts--container" style="display: none"></section>
-    <!-- 
-    <section id="projects--container"></section>
-    -->
+    <section id="projects--container" style="display: none"></section>
 
     <section class="joystick-wrapper">
       <div class="joystick-moves">
@@ -114,6 +112,7 @@
         await loadComponent("/components/about.html", "about-me--container");
         await loadComponent("/components/skills.html", "skills--container");
         await loadComponent("/components/contacts.html", "contacts--container");
+        await loadComponent("/components/projects.html", "projects--container");
 
         import("/src/main.js");
       }
