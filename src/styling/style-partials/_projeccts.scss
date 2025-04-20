@@ -33,6 +33,10 @@
     background-color: white;
     position: relative;
 
+    @media screen and (max-width: 1000px) {
+      padding-top: 20rem;
+    }
+
     .projects--logo {
       position: absolute;
       top: -15rem;
@@ -45,7 +49,7 @@
       animation-timing-function: ease-in-out;
 
       @media screen and (max-width: 1000px) {
-        top: 3rem;
+        top: -10rem;
         width: 25rem;
         height: 25rem;
       }
@@ -76,6 +80,11 @@
         height: 60rem;
         padding: 2rem;
         @include mixn.flexy(column, start);
+
+        @media screen and (max-width: 1000px) {
+          width: 30rem;
+          height: 30rem;
+        }
 
         .img-wrapper {
           width: 100%;
@@ -110,8 +119,10 @@
         a {
           text-decoration: none;
           width: 40%;
+          @include mixn.flexy();
         }
         button {
+          width: 100%;
           font-size: 3rem;
           font-weight: 600;
           border: none;
@@ -119,6 +130,10 @@
           padding: 0.5rem 1rem;
           cursor: pointer;
           color: rgb(255, 132, 56);
+
+          @media screen and (max-width: 1000px) {
+            font-size: 1.2rem;
+          }
         }
       }
     }
