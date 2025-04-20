@@ -6,13 +6,18 @@ import {
   wallsBoundary,
   wallsClickable,
 } from "../helpers/dynamic-values";
-import { aboutMe, cameraOffset, pointer } from "../helpers/constant-values";
+import {
+  aboutMe,
+  cameraOffset,
+  pointer,
+  skillsElem,
+} from "../helpers/constant-values";
 import camera from "./camera";
-import controls from "./controls";
 import renderer from "./renderer";
 import { modalToggler } from "../helpers/toggler";
 import scene from "./scene";
 import { onCollusion } from "../helpers/move";
+import controls from "./controls";
 
 const raycaster = new THREE.Raycaster();
 
@@ -42,7 +47,7 @@ function animate() {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(clickableObjects, true);
 
-  modalToggler(intersects, clickableObjects, [aboutMe]);
+  modalToggler(intersects, clickableObjects, [aboutMe, skillsElem]);
 
   if (BP89.instance) {
     onCollusion(wallsBoundary, wallsClickable, clickableObjects);
