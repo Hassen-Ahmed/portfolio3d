@@ -11,6 +11,8 @@ export const aboutMe = document.getElementById("about-me--container");
 export const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
 export const skillsElem = document.getElementById("skills--container");
 export const skillsCloseBtn = document.querySelector(".skills--close-btn");
+export const contactsElem = document.getElementById("contacts--container");
+export const contactsCloseBtn = document.querySelector(".contacts--close-btn");
 
 export const controllers = document.getElementsByClassName("controller");
 
