@@ -36,7 +36,7 @@
     @include mixn.flexy(column, center, center);
 
     @media screen and (max-width: 1000px) {
-      padding: 2rem 0rem;
+      padding: 10rem 0rem 2rem 0rem;
     }
 
     .contacts--logo {

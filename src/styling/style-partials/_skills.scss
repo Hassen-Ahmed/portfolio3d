@@ -13,10 +13,11 @@
   padding: 2rem 20rem 10rem 20rem;
   overflow-x: hidden;
   background-color: rgb(255, 132, 56);
+
   @include mixn.flexy(column, start);
 
   @media screen and (max-width: 1000px) {
-    padding: 2rem 2rem;
+    padding: 2rem 1rem;
   }
 
   &__heading {
@@ -25,37 +26,24 @@
 
   &--contents {
     width: 100%;
-    height: 100%;
-    // margin-top: 15rem;
-    padding-top: 50rem;
+    @include mixn.flexy(column);
     position: relative;
-
-    // background: rgb(243, 243, 243);
-    @include mixn.flexy(column, center, center);
-
-    @media screen and (max-width: 1000px) {
-      grid-template-columns: repeat(5, 1fr);
-    }
-
-    @media screen and (max-width: 650px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
 
     .skills--logo {
       position: absolute;
-      top: -3rem;
-
+      top: -5rem;
       width: 40rem;
       height: 40rem;
+
       animation-name: loop-up-down;
       animation-duration: 2s;
       animation-iteration-count: infinite;
       animation-timing-function: ease-in-out;
 
       @media screen and (max-width: 1000px) {
-        top: -10rem;
-        width: 20rem;
-        height: 20rem;
+        top: 3rem;
+        width: 25rem;
+        height: 25rem;
       }
 
       img {
@@ -65,17 +53,16 @@
       }
     }
 
-    .contact-list {
+    .skill-list {
       width: 100%;
-      height: 100%;
-      margin-top: 25rem;
+      height: auto;
+      margin-top: 10rem;
       padding-top: 25rem;
       padding-bottom: 5rem;
       background: rgb(243, 243, 243);
 
-      height: auto;
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
 
@@ -93,7 +80,14 @@
     @include mixn.flexy(column);
     padding: 2rem;
     font-size: 2rem;
-    height: 100%;
+    width: 20rem;
+    height: 20rem;
     color: rgb(255, 132, 56);
+
+    @media screen and (max-width: 600px) {
+      width: 10rem;
+      height: 10rem;
+      font-size: 1.2rem;
+    }
   }
 }
