@@ -26,8 +26,9 @@
     <!-- style="display: none" -->
     <section id="skills--container" style="display: none"></section>
     <!-- 
-    <section id="projects-container"></section>
-    <section id="contact-container"></section> -->
+    <section id="projects--container"></section>
+    -->
+    <section id="contacts--container" style="display: none"></section>
 
     <section class="joystick-wrapper">
       <div class="joystick-moves">
@@ -113,6 +114,7 @@
         );
         await loadComponent("/components/about.html", "about-me--container");
         await loadComponent("/components/skills.html", "skills--container");
+        await loadComponent("/components/contacts.html", "contacts--container");
 
         import("/src/main.js");
       }
