@@ -14,6 +14,8 @@ import {
   landingPageContainer,
   myCanvas,
   pointer,
+  skillsCloseBtn,
+  skillsElem,
 } from "./helpers/constant-values";
 import scene from "./majors/scene";
 import light from "./majors/light";
@@ -27,7 +29,6 @@ setTimeout(() => {
 }, 2000);
 
 enterBtn.addEventListener("click", () => {
-  console.log("enter btn");
   landingPageContainer.style.display = "none";
 });
 
@@ -54,6 +55,11 @@ aboutMeCloseBtn.addEventListener(
   "click",
   () => (aboutMe.style.display = "none")
 );
+skillsCloseBtn.addEventListener(
+  "click",
+  () => (skillsElem.style.display = "none")
+);
+
 myCanvas.addEventListener("click", onCanvasClick);
 
 function onCanvasClick(event) {
