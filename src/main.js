@@ -9,6 +9,8 @@ import {
   aboutMe,
   aboutMeCloseBtn,
   circles,
+  contactsCloseBtn,
+  contactsElem,
   controllers,
   enterBtn,
   landingPageContainer,
@@ -58,6 +60,10 @@ aboutMeCloseBtn.addEventListener(
 skillsCloseBtn.addEventListener(
   "click",
   () => (skillsElem.style.display = "none")
+);
+contactsCloseBtn.addEventListener(
+  "click",
+  () => (contactsElem.style.display = "none")
 );
 
 myCanvas.addEventListener("click", onCanvasClick);

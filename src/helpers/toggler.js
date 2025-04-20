@@ -5,6 +5,7 @@ export const modalToggler = (intersects, clickableObjects, element) => {
       element[0].style.display = "block";
     } else if (intersects[0].object.parent.name === "pointer-contact") {
       console.log("contact");
+      element[2].style.display = "block";
     } else if (intersects[0].object.parent.name === "pointer-projects") {
       console.log("projects");
     } else if (intersects[0].object.parent.name === "pointer-skills") {
