@@ -9,6 +9,7 @@ import {
 import {
   aboutMe,
   cameraOffset,
+  contactsElem,
   pointer,
   skillsElem,
 } from "../helpers/constant-values";
@@ -47,7 +48,11 @@ function animate() {
   raycaster.setFromCamera(pointer, camera);
   const intersects = raycaster.intersectObjects(clickableObjects, true);
 
-  modalToggler(intersects, clickableObjects, [aboutMe, skillsElem]);
+  modalToggler(intersects, clickableObjects, [
+    aboutMe,
+    skillsElem,
+    contactsElem,
+  ]);
 
   if (BP89.instance) {
     onCollusion(wallsBoundary, wallsClickable, clickableObjects);
