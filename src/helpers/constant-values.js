@@ -7,8 +7,11 @@ export const landingPageContainer = document.getElementById(
 
 export const myCanvas = document.getElementById("my-canvas");
 
-export const aboutMe = document.querySelector("#about-me--container");
+export const aboutMe = document.getElementById("about-me--container");
 export const aboutMeCloseBtn = document.querySelector(".about-me--close-btn");
+export const skillsElem = document.getElementById("skills--container");
+export const skillsCloseBtn = document.querySelector(".skills--close-btn");
+
 export const controllers = document.getElementsByClassName("controller");
 
 export const intersectObjectNames = [
