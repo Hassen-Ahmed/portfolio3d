@@ -16,6 +16,8 @@ import {
   landingPageContainer,
   myCanvas,
   pointer,
+  projectsCloseBtn,
+  projectsElem,
   skillsCloseBtn,
   skillsElem,
 } from "./helpers/constant-values";
@@ -64,6 +66,10 @@ skillsCloseBtn.addEventListener(
 contactsCloseBtn.addEventListener(
   "click",
   () => (contactsElem.style.display = "none")
+);
+projectsCloseBtn.addEventListener(
+  "click",
+  () => (projectsElem.style.display = "none")
 );
 
 myCanvas.addEventListener("click", onCanvasClick);

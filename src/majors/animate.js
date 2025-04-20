@@ -11,6 +11,7 @@ import {
   cameraOffset,
   contactsElem,
   pointer,
+  projectsElem,
   skillsElem,
 } from "../helpers/constant-values";
 import camera from "./camera";
@@ -52,6 +53,7 @@ function animate() {
     aboutMe,
     skillsElem,
     contactsElem,
+    projectsElem,
   ]);
 
   if (BP89.instance) {
